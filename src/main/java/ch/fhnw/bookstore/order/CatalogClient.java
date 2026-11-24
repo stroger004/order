@@ -22,12 +22,12 @@ public class CatalogClient {
     }
 
     /**
-     * Beispiel: GET http://localhost:8080/books?keywords=tolkien ring
+     * Beispiel: GET http://localhost:8080/api/books?keywords=tolkien ring
      */
     public List<Book> searchBooks(String keywords) {
         List<Book> books = restClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/books")
+                        .path("/api/books")
                         .queryParam("keywords", keywords)
                         .build())
                 .retrieve()
