@@ -6,6 +6,7 @@
     <style>
         body { font-family: sans-serif; margin: 2rem; }
         form { margin-bottom: 1.5rem; }
+        td form { margin: 0; }
         input[type=text] { width: 300px; padding: 0.4rem; }
         button { padding: 0.4rem 1rem; }
         table { border-collapse: collapse; width: 100%; }
@@ -31,6 +32,7 @@
         <th>Titel</th>
         <th>Autor</th>
         <th>Beschreibung</th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -39,11 +41,29 @@
         <td th:text="${book.title}">Titel</td>
         <td th:text="${book.author}">Autor</td>
         <td th:text="${book.description}">Beschreibung</td>
+        <td>
+            <form th:action="@{/cart}" method="post">
+                <input type="hidden" name="isbn" th:value="${book.isbn}">
+                <input type="hidden" name="title" th:value="${book.title}">
+                <input type="hidden" name="description" th:value="${book.description}">
+                <input type="hidden" name="author" th:value="${book.author}">
+                <input type="hidden" name="keywords" th:value="${keywords}">
+                <button type="submit" class="add-to-cart">In den Warenkorb</button>
+            </form>
+        </td>
     </tr>
     <tr th:if="${#lists.isEmpty(books)}">
-        <td colspan="4">Keine Bücher gefunden.</td>
+        <td colspan="5">Keine Bücher gefunden.</td>
     </tr>
     </tbody>
 </table>
+
+<h2>Warenkorb (<span id="cart-size" th:text="${cart.size}">0</span>)</h2>
+
+<p th:if="${cart.empty}">Der Warenkorb ist leer.</p>
+
+<ul id="cart" th:unless="${cart.empty}">
+    <li th:each="book : ${cart.books}" th:text="${book.title} + ' – ' + ${book.author}">Titel – Autor</li>
+</ul>
 </body>
 </html>
