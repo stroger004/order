@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bookstore – Katalog</title>
+    <style>
+        body { font-family: sans-serif; margin: 2rem; }
+        form { margin-bottom: 1.5rem; }
+        input[type=text] { width: 300px; padding: 0.4rem; }
+        button { padding: 0.4rem 1rem; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: left; }
+        th { background: #f0f0f0; }
+    </style>
+</head>
+<body>
+<h1>Buchsuche</h1>
+
+<form th:action="@{/catalog}" method="get">
+    <input type="text" id="keywords" name="keywords" placeholder="Titel, Autor oder Stichwort"
+           th:value="${keywords}">
+    <button type="submit" id="search">Suchen</button>
+</form>
+
+<table id="results">
+    <thead>
+    <tr>
+        <th>ISBN</th>
+        <th>Titel</th>
+        <th>Autor</th>
+        <th>Beschreibung</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book : ${books}">
+        <td th:text="${book.isbn}">978-...</td>
+        <td th:text="${book.title}">Titel</td>
+        <td th:text="${book.author}">Autor</td>
+        <td th:text="${book.description}">Beschreibung</td>
+    </tr>
+    <tr th:if="${#lists.isEmpty(books)}">
+        <td colspan="4">Keine Bücher gefunden.</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
