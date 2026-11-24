@@ -1,8 +1,24 @@
 services:
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_USER=catalog
+      - POSTGRES_PASSWORD=catalog
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U catalog"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
   catalog:
     image: catalog
     ports:
       - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/catalog
+    depends_on:
+      postgres:
+        condition: service_healthy
 
   order:
     image: order
