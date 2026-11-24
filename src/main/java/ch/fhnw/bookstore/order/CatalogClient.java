@@ -1,6 +1,5 @@
 package ch.fhnw.bookstore.order;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -9,15 +8,16 @@ import java.util.List;
 
 /**
  * Ruft die REST-API der Buchsuche im Catalog-Service auf.
+ * Die URL kommt aus der Konfiguration (CatalogProperties).
  */
 @Service
 public class CatalogClient {
 
     private final RestClient restClient;
 
-    public CatalogClient(@Value("${catalog.url}") String catalogUrl) {
+    public CatalogClient(CatalogProperties properties) {
         this.restClient = RestClient.builder()
-                .baseUrl(catalogUrl)
+                .baseUrl(properties.url())
                 .build();
     }
 
