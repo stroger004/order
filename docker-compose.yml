@@ -25,6 +25,7 @@ services:
     ports:
       - "8081:8081"
     environment:
+      # überschreibt catalog.url aus application.properties (CatalogProperties)
       - CATALOG_URL=http://catalog:8080
     depends_on:
       - catalog
