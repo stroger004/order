@@ -22,6 +22,8 @@
     <button type="submit" id="search">Suchen</button>
 </form>
 
+<p th:if="${error}" th:text="${error}" style="color: #b00020;">Fehlermeldung</p>
+
 <table id="results">
     <thead>
     <tr>
